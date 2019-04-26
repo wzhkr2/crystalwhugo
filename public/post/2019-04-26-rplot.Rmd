@@ -1,0 +1,65 @@
+---
+title: rPlot
+author: Crystal
+date: '2019-04-26'
+slug: rplot
+categories:
+  - blog
+  - R
+tags:
+  - plot
+  - R Markdown
+description: ''
+externalLink: ''
+series: []
+---
+```{r interactive, message=FALSE}
+#devtools::install_github("tidyverse/ggplot2")
+#install.packages("ggrepel")
+library(plotly)
+library(ggrepel)
+
+mtcars$label <- rownames(mtcars)
+mtcars$label[mtcars$cyl != 6] <- ""
+
+# New! (not available in ggplot2 version 2.2.1 or earlier)
+pos <- position_jitter(width = 0.3, seed = 2)
+
+
+my_cool_plot<- ggplot(mtcars, aes(factor(cyl), mpg, label=rownames(mtcars) , color=cyl)) +
+  geom_point(position = pos) +
+  geom_text_repel(position = pos) +
+  theme(legend.position = "none") +
+  labs(title = "position_jitter()")
+#
+my_cool_plot
+# 
+ggplotly(my_cool_plot)
+
+```
+
+
+```{r ggextension-examples}
+#library(ggplot2)
+#install.packages("viridisLite")
+# Example for `geom_ridgeline_gradient()`
+library(viridis)
+library(viridisLite)
+library(ggridges)
+#install.packages("viridis")
+#library(ggplot2)
+d <- data.frame(x = rep(1:5, 3) + c(rep(0, 5), rep(0.3, 5), rep(0.6, 5)),
+                y = c(rep(0, 5), rep(1, 5), rep(3, 5)),
+                height = c(0, 1, 3, 4, 0, 1, 2, 3, 5, 4, 0, 5, 4, 4, 1))
+ggplot(d, aes(x, y, height = height, group=y, fill = factor(x+y))) +
+  geom_ridgeline_gradient() +
+  scale_fill_viridis(discrete = TRUE, direction = -1, guide = "none")
+
+```
+
+```{r lincoln_weather example}
+ggplot(lincoln_weather, aes(x = `Mean Temperature [F]`, y = `Month`, fill = ..x..)) +
+  geom_density_ridges_gradient(scale = 3, rel_min_height = 0.01) +
+  scale_fill_viridis(name = "Temp. [F]", option = "C") +
+  labs(title = 'Temperatures in Lincoln NE in 2016')
+```
