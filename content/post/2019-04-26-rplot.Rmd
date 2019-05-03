@@ -1,5 +1,5 @@
 ---
-title: rPlot
+title: Post
 author: Crystal
 date: '2019-04-26'
 slug: rplot
@@ -13,6 +13,46 @@ description: ''
 externalLink: ''
 series: []
 ---
+
+This post combines two part: one is story part, the other one is plot part:
+
+Story Part:
+
+There was a farmer who sold a pound of butter to a baker.One day the baker decided to weigh the
+butter to see if he was getting the right amount, which he wasn’t. Angry about this, he took the
+farmer to court.
+
+The judge asked the farmer if he was using any measure to weight the butter. The farmer replied,
+“Honor, I am primitive. I don’t have a proper measure, but I do have a scale.”The judge asked,
+“Then how do you weigh the butter?”
+
+The farmer replied; “YOUR HONOR, LONG BEFORE THE BAKER STARTED BUYING BUTTER FROM ME, I HAVE
+BEEN BUYING A POUND LOAF OF BREAD FROM HIM. EVERY DAY WHEN THE BAKER BRINGS THE BREAD, I PUT IT
+ON THE SCALE AND GIVE HIM THE SAME WEIGHT IN BUTTER. IF ANYONE IS TO BE BLAMED, IT IS THE
+BAKER.”
+
+Second one: 
+
+One warm evening many years ago…
+
+After spending nearly every waking minute with Angel for eight straight days, I knew that I had
+to tell her just one thing.  So late at night, just before she fell asleep, I whispered it in
+her ear.  She smiled – the kind of smile that makes me smile back –and she said, “When I’m
+seventy-five and I think about my life and what it was like to be young, I hope that I can
+remember this very moment.”
+
+A few seconds later she closed her eyes and fell asleep. The room was peaceful – almost silent.
+All I could hear was the soft purr of her breathing.
+
+I stayed awake thinking about the time we’d spent together and all the choices in our lives that
+made this moment possible.  And at some point, I realized that it didn’t matter what we’d done
+or where we’d gone.  Nor did the future hold any significance.
+
+All that mattered was the serenity of the moment.
+Just being with her and breathing with her.
+
+Plotly Part Exercise: 
+
 ```{r interactive, message=FALSE}
 #devtools::install_github("tidyverse/ggplot2")
 #install.packages("ggrepel")
@@ -39,6 +79,7 @@ ggplotly(my_cool_plot)
 ```
 
 
+
 ```{r ggextension-examples}
 #library(ggplot2)
 #install.packages("viridisLite")
@@ -48,16 +89,20 @@ library(viridisLite)
 library(ggridges)
 #install.packages("viridis")
 #library(ggplot2)
+
 d <- data.frame(x = rep(1:5, 3) + c(rep(0, 5), rep(0.3, 5), rep(0.6, 5)),
                 y = c(rep(0, 5), rep(1, 5), rep(3, 5)),
                 height = c(0, 1, 3, 4, 0, 1, 2, 3, 5, 4, 0, 5, 4, 4, 1))
+
 ggplot(d, aes(x, y, height = height, group=y, fill = factor(x+y))) +
   geom_ridgeline_gradient() +
   scale_fill_viridis(discrete = TRUE, direction = -1, guide = "none")
 
 ```
 
+
 ```{r lincoln_weather example}
+
 ggplot(lincoln_weather, aes(x = `Mean Temperature [F]`, y = `Month`, fill = ..x..)) +
   geom_density_ridges_gradient(scale = 3, rel_min_height = 0.01) +
   scale_fill_viridis(name = "Temp. [F]", option = "C") +
